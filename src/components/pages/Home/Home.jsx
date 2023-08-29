@@ -1,26 +1,32 @@
-import React from 'react';
-import axios from 'axios';
-const Home = () => {
-  const options = {
-    method: 'GET',
-    url: 'https://api.themoviedb.org/3/trending/all/day',
-    params: { language: 'en-US' },
-    headers: {
-      accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZTBiMjA0M2E3YmRlZmRmMTI5ZGViYjc4NGJiZTFmNyIsInN1YiI6IjY0ZDA5ZWY5ODUwOTBmMDBjODdkY2FjYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AoWYcFyuoQyP_ePohi3LRcw4Fp8RAJIbZs-uo4526oA',
-    },
-  };
+import MoviesList from 'components/MoviesList/MoviesList';
+import { fetchPopular } from 'components/helpers/fetchFunctions';
+import React, { useEffect, useState } from 'react';
 
-  axios
-    .request(options)
-    .then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-  return <div>Home</div>;
+const Home = () => {
+  const [popular, setPopular] = useState([]);
+
+  useEffect(() => {
+    const fetchPopularFilms = async () => {
+      try {
+        const { results } = await fetchPopular();
+        setPopular(results);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchPopularFilms();
+  }, []);
+
+  return (
+    <div>
+      <h2>Trending Movies</h2>
+      {popular.length !== 0 ? (
+        <MoviesList popularFilms={popular} />
+      ) : (
+        <p>Films not found</p>
+      )}
+    </div>
+  );
 };
 
 export default Home;
