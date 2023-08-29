@@ -38,7 +38,8 @@ const Movies = () => {
     <div>
       <h1>Movies</h1>
       <input value={filmId} type="text" onChange={updateQueryString} />
-      {loading ? <Loader /> : <MoviesList films={films} />}
+      {loading && <Loader />}
+      <MoviesList films={films} />
     </div>
   );
 };

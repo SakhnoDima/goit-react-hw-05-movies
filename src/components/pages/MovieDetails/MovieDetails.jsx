@@ -34,10 +34,9 @@ const Product = () => {
   return (
     <Section>
       <SectionTitle>Film details</SectionTitle>
-      <ButtonGoBack>
-        <Link to={backLinkLocationRef.current}>Go back</Link>
-      </ButtonGoBack>
-
+      <Link to={backLinkLocationRef.current}>
+        <ButtonGoBack>Go back</ButtonGoBack>
+      </Link>
       <CardFilm>
         <Image
           src={
@@ -56,14 +55,14 @@ const Product = () => {
       </CardFilm>
       <ul>
         <li>
-          <ButtonGoBack>
-            <Link to="cast">Cast</Link>
-          </ButtonGoBack>
+          <Link to="cast">
+            <ButtonGoBack>Cast</ButtonGoBack>
+          </Link>
         </li>
         <li>
-          <ButtonGoBack>
-            <Link to="reviews">Reviews</Link>
-          </ButtonGoBack>
+          <Link to="reviews">
+            <ButtonGoBack>Reviews</ButtonGoBack>
+          </Link>
         </li>
       </ul>
 
