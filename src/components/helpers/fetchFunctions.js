@@ -17,6 +17,21 @@ export const fetchPopular = async () => {
 
 export const fetchMovieById = async movieId => {
   const response = await axios.get(`/movie/${movieId}`, params);
-
   return response;
+};
+
+export const fetchMovieByDetails = async movieName => {
+  const response = await axios.get(`/search/movie?query=${movieName}`, params);
+
+  return response.data;
+};
+
+export const fetchMovieCasts = async movieId => {
+  const response = await axios.get(`movie/${movieId}/credits?`, params);
+  return response.data;
+};
+
+export const fetchMovieReviews = async movieId => {
+  const response = await axios.get(`movie/${movieId}/reviews?`, params);
+  return response.data;
 };

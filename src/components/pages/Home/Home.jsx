@@ -21,7 +21,7 @@ const Home = () => {
     <div>
       <h2>Trending Movies</h2>
       {popular.length !== 0 ? (
-        <MoviesList popularFilms={popular} />
+        <MoviesList films={popular} />
       ) : (
         <p>Films not found</p>
       )}

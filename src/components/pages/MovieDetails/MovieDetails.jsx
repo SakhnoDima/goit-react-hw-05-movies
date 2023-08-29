@@ -1,11 +1,22 @@
 import { fetchMovieById } from 'components/helpers/fetchFunctions';
-import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useRef, useState, Suspense } from 'react';
+import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
+
+import defaultImg from '../../Pictures/vecteezy_icon-image-not-found-vector_.jpg';
+import {
+  ButtonGoBack,
+  CardFilm,
+  CardTitle,
+  Image,
+  OverviewTitle,
+  Section,
+  SectionTitle,
+} from './MovieDetails.styles';
 
 const Product = () => {
   const [film, setFilm] = useState({});
   const location = useLocation();
+  const backLinkLocationRef = useRef(location.state?.from ?? '/movies');
   const { movieId } = useParams();
 
   useEffect(() => {
@@ -19,22 +30,47 @@ const Product = () => {
     };
     fetchFilms();
   }, [movieId]);
-  console.log(location);
+  console.log(film);
   return (
-    <div>
-      <h2>Film details</h2>
-      <h3>{film.title}</h3>
+    <Section>
+      <SectionTitle>Film details</SectionTitle>
+      <ButtonGoBack>
+        <Link to={backLinkLocationRef.current}>Go back</Link>
+      </ButtonGoBack>
+
+      <CardFilm>
+        <Image
+          src={
+            film.poster_path
+              ? `https://image.tmdb.org/t/p/w500${film.poster_path}`
+              : `${defaultImg}`
+          }
+          alt={film.title}
+        />
+        <div>
+          <CardTitle>{film.title}</CardTitle>
+          <p>Release Date - {film.release_date}</p>
+          <OverviewTitle>Overview</OverviewTitle>
+          <p>{film.overview}</p>
+        </div>
+      </CardFilm>
       <ul>
         <li>
-          <Link to="cast">Cast</Link>
+          <ButtonGoBack>
+            <Link to="cast">Cast</Link>
+          </ButtonGoBack>
         </li>
         <li>
-          <Link to="reviews">Reviews</Link>
+          <ButtonGoBack>
+            <Link to="reviews">Reviews</Link>
+          </ButtonGoBack>
         </li>
       </ul>
-      <Link to={location.state?.from ?? '/'}>Back to Movies</Link>
-      <Outlet />
-    </div>
+
+      <Suspense fallback={<div>Loading Details...</div>}>
+        <Outlet />
+      </Suspense>
+    </Section>
   );
 };
 
