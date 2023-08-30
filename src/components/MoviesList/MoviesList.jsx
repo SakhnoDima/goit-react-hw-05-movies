@@ -1,6 +1,8 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { GiFilmProjector } from 'react-icons/gi';
+import { LinkItem } from './MoviesList.styles';
 
 const MoviesList = ({ films }) => {
   const location = useLocation();
@@ -9,9 +11,9 @@ const MoviesList = ({ films }) => {
       <ul>
         {films.map(({ id, title }) => (
           <li key={id}>
-            <Link to={`/movies/${id}`} state={{ from: location }}>
-              {title}
-            </Link>
+            <LinkItem to={`/movies/${id}`} state={{ from: location }}>
+              <GiFilmProjector /> {title}
+            </LinkItem>
           </li>
         ))}
       </ul>

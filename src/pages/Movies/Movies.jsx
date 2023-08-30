@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { fetchMovieByDetails } from 'components/helpers/fetchFunctions';
 import MoviesList from 'components/MoviesList/MoviesList';
 import Loader from 'components/Loader/Loader';
+import Form from 'components/Form/Form';
 
 const Movies = () => {
   const [films, setFilms] = useState([]);
@@ -26,18 +27,18 @@ const Movies = () => {
   }, [filmId]);
 
   const updateQueryString = event => {
-    const searchQuery = event.target.value;
+    event.preventDefault();
+    const searchQuery = event.target.searchQuery.value;
     if (searchQuery === '') {
       return setSearchParams({});
     }
-
     setSearchParams({ q: searchQuery });
   };
 
   return (
     <div>
-      <h1>Movies</h1>
-      <input value={filmId} type="text" onChange={updateQueryString} />
+      <h2 style={{ marginBottom: 16 }}>Movies</h2>
+      <Form updateQueryString={updateQueryString} />
       {loading && <Loader />}
       <MoviesList films={films} />
     </div>

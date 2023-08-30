@@ -2,8 +2,9 @@ import { fetchMovieById } from 'components/helpers/fetchFunctions';
 import React, { useEffect, useRef, useState, Suspense } from 'react';
 import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
 
-import defaultImg from '../../Pictures/vecteezy_icon-image-not-found-vector_.jpg';
+import defaultImg from '../../components/Pictures/vecteezy_icon-image-not-found-vector_.jpg';
 import {
+  ButtonList,
   ButtonGoBack,
   CardFilm,
   CardTitle,
@@ -14,7 +15,7 @@ import {
 } from './MovieDetails.styles';
 
 const Product = () => {
-  const [film, setFilm] = useState({});
+  const [film, setFilm] = useState(null);
   const location = useLocation();
   const backLinkLocationRef = useRef(location.state?.from ?? '/movies');
   const { movieId } = useParams();
@@ -30,7 +31,9 @@ const Product = () => {
     };
     fetchFilms();
   }, [movieId]);
-  console.log(film);
+  if (!film) {
+    return;
+  }
   return (
     <Section>
       <SectionTitle>Film details</SectionTitle>
@@ -53,7 +56,7 @@ const Product = () => {
           <p>{film.overview}</p>
         </div>
       </CardFilm>
-      <ul>
+      <ButtonList>
         <li>
           <Link to="cast">
             <ButtonGoBack>Cast</ButtonGoBack>
@@ -64,7 +67,7 @@ const Product = () => {
             <ButtonGoBack>Reviews</ButtonGoBack>
           </Link>
         </li>
-      </ul>
+      </ButtonList>
 
       <Suspense fallback={<div>Loading Details...</div>}>
         <Outlet />

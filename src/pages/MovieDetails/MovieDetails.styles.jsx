@@ -45,3 +45,8 @@ export const OverviewTitle = styled.h3`
   margin-top: ${({ theme }) => theme.spacing(50)};
   margin-bottom: ${({ theme }) => theme.spacing(4)};
 `;
+
+export const ButtonList = styled.ul`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing(4)};
+`;

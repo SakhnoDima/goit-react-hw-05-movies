@@ -10,9 +10,11 @@ const params = {
   },
 };
 
-export const fetchPopular = async () => {
-  const response = await axios.get(`trending/movie/day`, params);
-  return response.data;
+export const fetchPopular = async page => {
+  const response = await axios.get(
+    `trending/movie/day?api_key=${API_KEY}&page=${page}`
+  );
+  return response;
 };
 
 export const fetchMovieById = async movieId => {
