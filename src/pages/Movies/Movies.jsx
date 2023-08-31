@@ -11,16 +11,16 @@ import Buttons from 'components/LoadButton/Buttons';
 const Movies = () => {
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [pageS, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
   const filmId = searchParams.get('q') ?? '';
+  const pageParam = searchParams.get('page') ?? 1;
 
   useEffect(() => {
-    console.log(`pageS -- ${pageS}`);
+    console.log(`pageParam-- ${pageParam}`);
     console.log(`filmId -- ${filmId}`);
 
-    if (pageS === 0 && filmId === '') {
+    if (pageParam === 1 && filmId === '') {
       console.log('нет запроса');
       return;
     }
@@ -30,7 +30,7 @@ const Movies = () => {
         setLoading(true);
         const { results, page, total_pages } = await fetchMovieByDetails(
           filmId,
-          pageS
+          pageParam
         );
         setFilms(results);
         setTotal(total_pages);
@@ -49,33 +49,19 @@ const Movies = () => {
       }
     };
     fetchFilmByKey();
-  }, [filmId, pageS]);
-
-  const updateQueryString = event => {
-    event.preventDefault();
-    setPage(1);
-    console.log(pageS);
-    const searchQuery = event.target.searchQuery.value.trim();
-    if (searchQuery === '') {
-      toast.error('Enter film details', {
-        position: 'top-right',
-        autoClose: 3000,
-        closeOnClick: true,
-        theme: 'light',
-      });
-      return setSearchParams({});
-    }
-    setSearchParams({ q: searchQuery });
-  };
+  }, [filmId, pageParam]);
 
   const handlePageChange = event => {
     const action = event.target.name;
     switch (action) {
       case 'inc':
-        setPage(prev => prev + 1);
+        console.log(total);
+        setSearchParams({ q: filmId, page: Number(pageParam) + 1 });
+
         break;
       case 'dec':
-        setPage(prev => prev - 1);
+        setSearchParams({ q: filmId, page: Number(pageParam) - 1 });
+
         break;
       default:
         break;
@@ -85,10 +71,10 @@ const Movies = () => {
   return (
     <div>
       <h2 style={{ marginBottom: 16 }}>Movies</h2>
-      <Form value={filmId} updateQueryString={updateQueryString} />
+      <Form />
       {loading && <Loader />}
       <MoviesList films={films} />
-      <Buttons page={pageS} total={total} onClick={handlePageChange} />
+      <Buttons page={pageParam} total={total} onClick={handlePageChange} />
     </div>
   );
 };

@@ -1,14 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Icon, Input, Forma } from './Form.styles';
+import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const Form = ({ updateQueryString, value }) => {
+const Form = () => {
+  const [, setSearchParams] = useSearchParams();
+  const [search, setSearch] = useState('');
+
+  const updateQueryString = event => {
+    event.preventDefault();
+    const searchQuery = event.target.searchQuery.value.trim();
+    if (searchQuery === '') {
+      toast.error('Enter film details', {
+        position: 'top-right',
+        autoClose: 3000,
+        closeOnClick: true,
+        theme: 'light',
+      });
+      return setSearchParams({});
+    }
+    setSearchParams({ q: searchQuery, page: 1 });
+  };
+
+  const handleChangeSearch = event => {
+    setSearch(event.target.value);
+  };
   return (
     <Forma
       onSubmit={updateQueryString}
       style={{ marginBottom: 16 }}
       autoComplete="off"
     >
-      <Input type="text" name="searchQuery" placeholder="search film" />
+      <Input
+        onChange={handleChangeSearch}
+        value={search}
+        type="text"
+        name="searchQuery"
+        placeholder="search film"
+      />
       <Icon />
     </Forma>
   );
