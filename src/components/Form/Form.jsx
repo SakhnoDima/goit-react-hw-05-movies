@@ -9,7 +9,7 @@ const Form = () => {
 
   const updateQueryString = event => {
     event.preventDefault();
-    const searchQuery = event.target.searchQuery.value.trim();
+    const searchQuery = search;
     if (searchQuery === '') {
       toast.error('Enter film details', {
         position: 'top-right',
@@ -20,6 +20,7 @@ const Form = () => {
       return setSearchParams({});
     }
     setSearchParams({ q: searchQuery, page: 1 });
+    setSearch('');
   };
 
   const handleChangeSearch = event => {

@@ -11,7 +11,7 @@ export const ListItem = styled.li`
 export const LinkItem = styled(Link)`
   display: inline-flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
 
   &:hover,
   &:focus {

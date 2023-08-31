@@ -4,8 +4,6 @@ import { AiOutlineCaretLeft, AiOutlineCaretRight } from 'react-icons/ai';
 import { Button, ButtonSection } from './Button.styles';
 
 const Buttons = ({ page, total, onClick }) => {
-  console.log(`page - ${page}`);
-  console.log(`total - ${total}`);
   return (
     <ButtonSection>
       <Button disabled={page <= 1} name="dec" onClick={onClick}>

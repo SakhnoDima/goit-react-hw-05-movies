@@ -17,23 +17,25 @@ const Movies = () => {
   const pageParam = searchParams.get('page') ?? 1;
 
   useEffect(() => {
-    console.log(`pageParam-- ${pageParam}`);
-    console.log(`filmId -- ${filmId}`);
-
     if (pageParam === 1 && filmId === '') {
-      console.log('нет запроса');
       return;
     }
     const fetchFilmByKey = async () => {
       try {
-        console.log(`запрос`);
         setLoading(true);
-        const { results, page, total_pages } = await fetchMovieByDetails(
-          filmId,
-          pageParam
-        );
+        const { results, page, total_pages, total_results } =
+          await fetchMovieByDetails(filmId, pageParam);
         setFilms(results);
         setTotal(total_pages);
+
+        if (total_results === 0) {
+          toast.info('Results not found', {
+            position: 'top-right',
+            autoClose: 3000,
+            closeOnClick: true,
+            theme: 'light',
+          });
+        }
 
         if (page > 1 && page === total_pages) {
           toast.info('Its last page', {
@@ -55,7 +57,6 @@ const Movies = () => {
     const action = event.target.name;
     switch (action) {
       case 'inc':
-        console.log(total);
         setSearchParams({ q: filmId, page: Number(pageParam) + 1 });
 
         break;
