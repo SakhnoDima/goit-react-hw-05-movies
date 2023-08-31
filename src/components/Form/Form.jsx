@@ -1,14 +1,16 @@
 import React from 'react';
+import { Icon, Input, Forma } from './Form.styles';
 
-const Form = ({ updateQueryString }) => {
+const Form = ({ updateQueryString, value }) => {
   return (
-    <form
+    <Forma
+      onSubmit={updateQueryString}
       style={{ marginBottom: 16 }}
       autoComplete="off"
-      onSubmit={updateQueryString}
     >
-      <input type="text" name="searchQuery" placeholder="search film" />
-    </form>
+      <Input type="text" name="searchQuery" placeholder="search film" />
+      <Icon />
+    </Forma>
   );
 };
 

@@ -11,6 +11,10 @@ h1,
     margin: 0;
   }
 
+  html, body{
+    height: 100%;
+  }
+
   ul,
   ol {
     list-style: none;

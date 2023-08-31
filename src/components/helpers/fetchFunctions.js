@@ -22,9 +22,11 @@ export const fetchMovieById = async movieId => {
   return response;
 };
 
-export const fetchMovieByDetails = async movieName => {
-  const response = await axios.get(`/search/movie?query=${movieName}`, params);
-
+export const fetchMovieByDetails = async (movieName, page) => {
+  const response = await axios.get(
+    `/search/movie?query=${movieName}&page=${page}`,
+    params
+  );
   return response.data;
 };
 

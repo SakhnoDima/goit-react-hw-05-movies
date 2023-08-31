@@ -15,7 +15,6 @@ const Home = () => {
         setLoading(true);
         const { data } = await fetchPopular(page);
         const { results, total_pages } = data;
-        // console.log(data);
         setPopular(results);
         setTotal(total_pages);
       } catch (error) {
@@ -38,6 +37,9 @@ const Home = () => {
         break;
       default:
         break;
+    }
+    if (page === total) {
+      console.log('last page');
     }
   };
 

@@ -7,6 +7,13 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   border-bottom: 1px solid black;
+  background: rgb(0, 5, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 5, 255, 0.6111038165266107) 0%,
+    rgba(9, 9, 121, 1) 54%,
+    rgba(2, 0, 36, 1) 100%
+  );
 `;
 export const Nav = styled.nav`
   display: flex;
@@ -29,5 +36,23 @@ export const StyledLink = styled(NavLink)`
   }
 `;
 export const Main = styled.main`
+  flex: 1 1 auto;
   padding: 16px;
+`;
+
+export const Link = styled.a`
+  display: block;
+  width: 19px;
+  margin: 0 auto;
+`;
+
+export const Footer = styled.footer`
+  height: 40px;
+  text-align: center;
+`;
+
+export const Wrapper = styled.section`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
